@@ -11,6 +11,7 @@ PL/SQL Generators to use with Oradew extension for VSCode:
 
 Generators are stored as functions in a package named `UTL_GENERATE`. The package has to be saved (compiled) on your development DB (DEV environment) before usage:
 
+- Create `dbconfig.json` file
 - Run `Oradew: Package` and then
 - Run `Oradew: Deploy` to save the package to DB
 
