@@ -106,32 +106,32 @@ as
       'SET FEEDBACK OFF'
       -- Variables declaration of arguments
       -- 200 default varchar2 length, refcursor insted of "ref cursors", varchar2 for date
-      || chr(10) || listagg('VAR ' || NVL(argument_name, 'v_Return') || overload || ' ' ||
+      || chr(10) || to_clob(listagg('VAR ' || NVL(argument_name, 'v_Return') || overload || ' ' ||
         case data_type
           when 'VARCHAR2' then data_type || '(200)'
           when 'REF CURSOR' then 'REFCURSOR'
           when 'DATE' then 'VARCHAR2(30)'
           --when 'OPAQUE/XMLTYPE' then 'CLOB'
           else data_type
-        end ||';', chr(10)) within group (order by position)
+        end ||';', chr(10)) within group (order by position))
       -- Assignments only for INPUT arguments
-      || chr(10) || chr(10) ||listagg(case when IN_OUT = 'IN' then 'EXEC :' || argument_name || overload || ' := ' ||
+      || chr(10) || chr(10) ||to_clob(listagg(case when IN_OUT = 'IN' then 'EXEC :' || argument_name || overload || ' := ' ||
         'NULL'
         --case data_type
         --  when 'DATE' then 'to_date(sysdate)'
         --  when 'NUMBER' then to_char(position)
         --  else '''' || to_char(position) || ''''
         --end
-        || ';' else null end, chr(10)) within group (order by position)
+        || ';' else null end, chr(10)) within group (order by position))
       -- Execution of object
       || chr(10) || chr(10) || 'EXEC '
       -- Function has v_Return assignment
       || case when is_function = '1' then ':v_Return'||max(overload) ||' := ' else null end
       || schema || '.' || v_object || '('
-      || listagg(case when argument_name is not null then ':' || NVL(argument_name, 'v_Return')|| overload else null end, ',') within group (order by position)
+      || to_clob(listagg(case when argument_name is not null then ':' || NVL(argument_name, 'v_Return')|| overload else null end, ',') within group (order by position))
       || ');'
       --printing OUTPUT variables
-      || chr(10) || chr(10) ||listagg(case when IN_OUT = 'OUT' then 'PRINT ' || NVL(argument_name, 'v_Return')|| overload || ';' else null end, chr(10)) within group (order by position)
+      || chr(10) || chr(10) ||to_clob(listagg(case when IN_OUT = 'OUT' then 'PRINT ' || NVL(argument_name, 'v_Return')|| overload || ';' else null end, chr(10)) within group (order by position))
       || chr(10)
     into
       v_clobTemp
