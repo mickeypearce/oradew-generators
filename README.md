@@ -2,47 +2,41 @@
 
 PL/SQL Generators to use with Oradew extension for VSCode:
 
-- `updateStatement` - Generate an Update statement for a table
-- `insertStatement` - Generate an Insert statement for a table
-- `runScript` - Generate a run script to execute procedure or function. Useful to print refcursors, etc.
+- `Update Statement` - Generate an Update statement for a table
+- `Insert Statement` - Generate an Insert statement for a table
+- `Script to Run Procedure` - Generate a Run script to execute procedure or function. Useful to print refcursors, etc.
+- `Script to Import Dependencies` - Generate a Shell script to import schema dependencies
+- `Add Debug Parameters` - Generate statements to log params of procedure or function
 
 
 ## Install
 
-Generators are stored as functions in a package named `UTL_GENERATE`. The package has to be saved (compiled) on your development DB (DEV environment) before usage:
+Generators are stored as functions in a package named [UTL_GENERATE.sql](src/PACKAGE_BODIES/UTL_GENERATE.sql). The package has to be saved (compiled) on your database (DEV environment) before usage.
 
-- Create `dbconfig.json` file
-- Run `Oradew: Package` and then
-- Run `Oradew: Deploy` to save the package to DB
+First clone the repo:
+```bash
+> git clone https://github.com/mickeypearce/oradew-generators.git
+> cd oradew-generators
+```
+Create `dbconfig.json` with your connection credentials, then `package` source and `deploy` it to database:
+```bash
+# substitue "localhost/orclpdb", "hr" and "welcome" with your database information
+> echo {"DEV": {"connectString": "localhost/orclpdb", "users": [{"user": "hr", "password": "welcome"}]}} > dbconfig.json
 
+# generate deploy/run.sql script
+> oradew package
+
+# execute script on "DEV" env
+> oradew deploy
+```
+Package `UTL_GENERATE` is now saved on your DEV DB and ready to use!
 ## Usage
 
-Add generator definitions to `oradewrc.json` file of your project and run generator with `Oradew: Generate...` command on a selected object.
-```json
-{
-  "generator.define": [
-    {
-      "label": "Update Statement",
-      "function": "utl_generate.updateStatement",
-      "description": "Generate an Update statement for a table"
-    },
-    {
-      "label": "Insert Statement",
-      "function": "utl_generate.insertStatement",
-      "description": "Generate an Insert statement for a table"
-    },    
-    {
-      "label": "Run Script",
-      "function": "utl_generate.runScript",
-      "description": "Generate a Run script to execute procedure or function"
-    }
-  ]
-}
-```
+To use generators in your project simply copy configuration file `oradewrc-generate.json` to your workspace root. Then use `Oradew: Generate...` command to select a generator to run on a selected object.
 
 ## Specification
 
-The DB generator function has the following signature:
+The DB generator function has the following specification:
 
 ```sql
 FUNCTION updateStatement(

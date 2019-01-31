@@ -1,4 +1,5 @@
 {
-  "version.number": "0.0.1",
-  "version.description": "Generators"
+  "version.number": "0.0.2",
+  "version.description": "Add generator configuration file",
+  "version.releaseDate": "2019-02-01"
 }

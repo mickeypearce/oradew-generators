@@ -1,0 +1,30 @@
+{
+  "generator.define": [
+    {
+      "label": "Update Statement",
+      "function": "utl_generate.updateStatement",
+      "description": "Generate an Update statement for a table"
+    },
+    {
+      "label": "Insert Statement",
+      "function": "utl_generate.insertStatement",
+      "description": "Generate an Insert statement for a table"
+    },
+    {
+      "label": "Script to Run Procedure",
+      "function": "utl_generate.runScript",
+      "description": "Generate a Run script to execute procedure or function"
+    },
+    {
+      "label": "Script to Import Dependencies",
+      "function": "utl_generate.scriptImportDependencies",
+      "description": "Generate a Shell script to import schema dependencies",
+      "output": "import.bat"
+    },
+    {
+      "label": "Add Debug Parameters",
+      "function": "utl_generate.paramDebug",
+      "description": "Generate statements to log params of procedure or function"
+    }
+  ]
+}
